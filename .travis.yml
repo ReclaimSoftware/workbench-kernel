@@ -1,0 +1,10 @@
+language: python
+python:
+  - "2.7"
+branches:
+  only:
+    - master
+notifications:
+  email:
+    - andrew@andrewschaaf.com
+script: "python test-context.py && python test-stdlib.py && python test-value_repr.py"

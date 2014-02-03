@@ -1,5 +1,7 @@
 **A server for executing workbench notebook code fragments**
 
+[![Build Status](https://secure.travis-ci.org/ReclaimSoftware/workbench-kernel.png)](http://travis-ci.org/ReclaimSoftware/workbench-kernel)
+
 
 ### Running the server
 
