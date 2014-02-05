@@ -1,6 +1,7 @@
 import ast, _ast, time
 from stdlib import Image, Video
 from value_repr import value_repr
+from upstream.codegen.codegen import to_source
 
 class Context:
 
@@ -16,15 +17,15 @@ class Context:
 
     def run_code(self, code):
         result = None
-        body = ast.parse(code).body
         t0 = time.time()
         try:
-            assert len(body) == 1# TODO: multi-line
-            node = ast.parse(code).body[0]
-            if isinstance(node, _ast.Expr):
-                result = eval(code, self.globals, self.locals)
-            else:
-                exec(code, self.globals, self.locals)
+            for node in ast.parse(code).body:
+                node_code = to_source(node)
+                if isinstance(node, _ast.Expr):
+                    result = eval(node_code, self.globals, self.locals)
+                else:
+                    exec(node_code, self.globals, self.locals)
+                    result = None
         except Exception, e:
             result = e
         microseconds = int((time.time() - t0) * 1000000)
